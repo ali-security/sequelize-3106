@@ -1464,7 +1464,7 @@ The following associations are defined on "Worker": "ToDos"`);
         expect(user).to.have.length(1);
       });
 
-      it('should be possible to order by sequelize.sql.col()', async function () {
+      it('should be possible to order by sql.col()', async function () {
         const Company = this.sequelize.define('Company', {
           name: DataTypes.STRING,
         });
