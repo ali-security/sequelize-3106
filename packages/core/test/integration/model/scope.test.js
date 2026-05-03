@@ -1,7 +1,7 @@
 'use strict';
 
 const chai = require('chai');
-const { DataTypes, Op, Sequelize } = require('@sequelize/core');
+const { DataTypes, Op, sql } = require('@sequelize/core');
 
 const expect = chai.expect;
 const Support = require('../support');
@@ -50,11 +50,7 @@ describe(Support.getTestDialectTeaser('Model'), () => {
               },
             },
             like_t: {
-              where: Sequelize.where(
-                Sequelize.fn('LOWER', Sequelize.col('username')),
-                Op.like,
-                '%t%',
-              ),
+              where: sql.where(sql.fn('LOWER', sql.col('username')), Op.like, '%t%'),
             },
           },
         },

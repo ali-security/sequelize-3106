@@ -1,5 +1,5 @@
 import type { FindOptions } from '@sequelize/core';
-import { DataTypes, Op, Sequelize, col, literal, where } from '@sequelize/core';
+import { col, DataTypes, literal, Op, sql, where } from '@sequelize/core';
 import { expect } from 'chai';
 import assert from 'node:assert';
 import { beforeEach2, getTestDialectTeaser, resetSequelizeInstance } from '../../support';
@@ -595,7 +595,7 @@ describe(getTestDialectTeaser('Model'), () => {
                 { field: 1 },
                 { field: 1 },
                 { [Op.or]: [{ field: 1 }, { field: 1 }] },
-                Sequelize.where(col('field'), Op.is, 1),
+                sql.where(sql.col('field'), Op.is, 1),
               ],
             },
           };
