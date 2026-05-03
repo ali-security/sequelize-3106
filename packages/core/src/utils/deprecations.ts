@@ -146,7 +146,7 @@ export const noSequelizeRandom = deprecate(
   'SEQUELIZE0032',
 );
 
-const emittedStaticPropertyWarnings = new Set<string>();
+const staticPropertyDeprecations = new Map<string, () => void>();
 
 /**
  * Emits a deprecation warning (once per property name) when a named export is accessed
@@ -155,18 +155,20 @@ const emittedStaticPropertyWarnings = new Set<string>();
  * @param propertyName
  */
 export function noSequelizeStaticProperty(propertyName: string): void {
-  if (emittedStaticPropertyWarnings.has(propertyName)) {
-    return;
+  let deprecated = staticPropertyDeprecations.get(propertyName);
+  if (!deprecated) {
+    deprecated = deprecate(
+      noop,
+      `Do not use the Sequelize.${propertyName} static property. Import ${propertyName} directly from '@sequelize/core' instead.`,
+      `SEQUELIZE0033-${propertyName}`,
+    );
+    staticPropertyDeprecations.set(propertyName, deprecated);
   }
 
-  emittedStaticPropertyWarnings.add(propertyName);
-  process.emitWarning(
-    `Do not use the Sequelize.${propertyName} static property. Import ${propertyName} directly from '@sequelize/core' instead.`,
-    { type: 'DeprecationWarning', code: `SEQUELIZE0033-${propertyName}` },
-  );
+  deprecated();
 }
 
-const emittedInstancePropertyWarnings = new Set<string>();
+const instancePropertyDeprecations = new Map<string, () => void>();
 
 /**
  * Emits a deprecation warning (once per property name) when a named export is accessed
@@ -175,13 +177,15 @@ const emittedInstancePropertyWarnings = new Set<string>();
  * @param propertyName
  */
 export function noSequelizeInstanceProperty(propertyName: string): void {
-  if (emittedInstancePropertyWarnings.has(propertyName)) {
-    return;
+  let deprecated = instancePropertyDeprecations.get(propertyName);
+  if (!deprecated) {
+    deprecated = deprecate(
+      noop,
+      `Do not use the sequelize.${propertyName} instance property. Import ${propertyName} directly from '@sequelize/core' instead.`,
+      `SEQUELIZE0034-${propertyName}`,
+    );
+    instancePropertyDeprecations.set(propertyName, deprecated);
   }
 
-  emittedInstancePropertyWarnings.add(propertyName);
-  process.emitWarning(
-    `Do not use the sequelize.${propertyName} instance property. Import ${propertyName} directly from '@sequelize/core' instead.`,
-    { type: 'DeprecationWarning', code: `SEQUELIZE0034-${propertyName}` },
-  );
+  deprecated();
 }
