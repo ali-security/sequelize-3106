@@ -107,7 +107,7 @@ Instead of specifying a Model, either:
       expect(user).to.be.ok;
     });
 
-    it('should support to use associations with Sequelize.col', async function () {
+    it('should support to use associations with sql.col', async function () {
       const Table1 = this.sequelize.define('Table1');
       const Table2 = this.sequelize.define('Table2');
       const Table3 = this.sequelize.define('Table3', { value: DataTypes.INTEGER });

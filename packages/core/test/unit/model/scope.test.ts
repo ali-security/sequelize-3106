@@ -564,7 +564,7 @@ describe(getTestDialectTeaser('Model'), () => {
       });
 
       describe('sequelize where', () => {
-        it('should group 2 sequelize.where with an Op.and', () => {
+        it('should group 2 sql.where with an Op.and', () => {
           const { TestModel } = vars;
 
           const scope = TestModel.withScope([
@@ -579,7 +579,7 @@ describe(getTestDialectTeaser('Model'), () => {
           expect(scope).to.deep.equal(expected);
         });
 
-        it('should group 2 sequelize.where and other scopes with an Op.and', () => {
+        it('should group 2 sql.where and other scopes with an Op.and', () => {
           const { TestModel } = vars;
 
           const scope = TestModel.withScope([
